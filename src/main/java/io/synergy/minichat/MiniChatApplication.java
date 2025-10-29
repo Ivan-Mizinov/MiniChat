@@ -14,7 +14,7 @@ public class MiniChatApplication {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(MiniChatApplication.class, args);
-        ContactService contactService = (ContactServiceImpl) ctx.getBean(ContactServiceImpl.class);
+        ContactService contactService = ctx.getBean(ContactServiceImpl.class);
         List<Contact> contacts = contactService.findAll();
         for (Contact contact : contacts) {
             System.out.println(contact);
