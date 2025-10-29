@@ -2,6 +2,9 @@ package io.synergy.minichat.service;
 
 import io.synergy.minichat.dto.Contact;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ public class ContactServiceImpl implements ContactService {
 
 
     @Override
+    @Cacheable(value = "allContacts")
     public List<Contact> findAll() {
         return new ArrayList<>(contactMap.values());
     }
@@ -34,6 +38,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    @CachePut(value = "contacts", key = "#contact.id")
     public Contact update(Contact contact) {
         Long id = contact.getId();
         if (!contactMap.containsKey(id)) {
@@ -45,12 +50,14 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    @Cacheable(value = "contacts", key = "#id")
     public Contact findById(Long id) throws Exception {
         if (Objects.isNull(id)) throw new Exception("id can not be null");
         return contactMap.get(id);
     }
 
     @Override
+    @CacheEvict(value = "contacts", key = "#id")
     public void deleteById(Long id) {
         contactMap.remove(id);
     }
