@@ -11,7 +11,7 @@ public interface ContactService {
 
     Contact update(Contact contact);
 
-    Contact findById(Long id);
+    Contact findById(Long id) throws Exception;
 
     void deleteById(Long id);
 }

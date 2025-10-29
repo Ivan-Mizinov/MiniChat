@@ -45,7 +45,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact findById(Long id) {
+    public Contact findById(Long id) throws Exception {
+        if (Objects.isNull(id)) throw new Exception("id can not be null");
         return contactMap.get(id);
     }
 

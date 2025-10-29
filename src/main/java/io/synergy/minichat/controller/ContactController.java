@@ -23,7 +23,7 @@ public class ContactController {
     }
 
     @GetMapping("/api/service/Contact/{id}")
-    public Contact getContactById(@PathVariable Long id) {
+    public Contact getContactById(@PathVariable Long id) throws Exception {
         return contactService.findById(id);
     }
 
