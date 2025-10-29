@@ -1,4 +1,4 @@
-package io.synergy.minichat.model;
+package io.synergy.minichat.dto;
 
 public class Contact {
     private Long id;

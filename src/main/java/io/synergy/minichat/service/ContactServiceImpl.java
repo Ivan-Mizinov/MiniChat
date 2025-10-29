@@ -1,6 +1,6 @@
 package io.synergy.minichat.service;
 
-import io.synergy.minichat.model.Contact;
+import io.synergy.minichat.dto.Contact;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;

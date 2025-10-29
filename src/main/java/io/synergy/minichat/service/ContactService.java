@@ -1,6 +1,6 @@
 package io.synergy.minichat.service;
 
-import io.synergy.minichat.model.Contact;
+import io.synergy.minichat.dto.Contact;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package io.synergy.minichat.controller;
 
-import io.synergy.minichat.model.Contact;
+import io.synergy.minichat.dto.Contact;
 import io.synergy.minichat.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
