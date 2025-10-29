@@ -1,10 +1,22 @@
 package io.synergy.minichat.model;
 
 public class Contact {
+    private Long id;
     private String lastName;
     private String firstName;
     private String middleName;
     private String phone;
+
+    public Contact() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getLastName() {
         return lastName;

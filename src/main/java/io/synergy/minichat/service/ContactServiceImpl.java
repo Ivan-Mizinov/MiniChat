@@ -6,8 +6,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -15,10 +15,46 @@ public class ContactServiceImpl implements ContactService {
     @Value("${contacts.file.path}")
     private String filePath;
 
+    private final Map<Long, Contact> contactMap = new ConcurrentHashMap<>();
+    private Long currentId = 1L;
+
+
     @Override
     public List<Contact> findAll() {
-        List<Contact> contacts = new ArrayList<>();
+        return new ArrayList<>(contactMap.values());
+    }
 
+    @Override
+    public Contact save(Contact contact) {
+        if (contact.getId() == null) {
+            contact.setId(currentId++);
+        }
+        contactMap.put(contact.getId(), contact);
+        return contact;
+    }
+
+    @Override
+    public Contact update(Contact contact) {
+        Long id = contact.getId();
+        if (!contactMap.containsKey(id)) {
+            throw new NoSuchElementException("Контакт с ID " + id + " не найден");
+        }
+        contact.setId(id);
+        contactMap.put(id, contact);
+        return contact;
+    }
+
+    @Override
+    public Contact findById(Long id) {
+        return contactMap.get(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        contactMap.remove(id);
+    }
+
+    public void initFromFile() {
         try {
             ClassPathResource resource = new ClassPathResource(filePath);
             try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
@@ -42,14 +78,12 @@ public class ContactServiceImpl implements ContactService {
                     contact.setLastName(parts[1]);
                     contact.setMiddleName(parts[2]);
                     contact.setPhone(parts[3]);
-                    contacts.add(contact);
+                    save(contact);
                 }
             }
         } catch (IOException e) {
             System.out.println("Ошибка чтения файла: " + e.getMessage());
         }
-
-        return contacts;
     }
 
 }
