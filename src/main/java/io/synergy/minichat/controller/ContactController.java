@@ -3,6 +3,7 @@ package io.synergy.minichat.controller;
 import io.synergy.minichat.dto.Contact;
 import io.synergy.minichat.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +24,12 @@ public class ContactController {
     }
 
     @GetMapping("/api/service/Contact/{id}")
-    public Contact getContactById(@PathVariable Long id) throws Exception {
-        return contactService.findById(id);
+    public ResponseEntity<Contact> getContactById(@PathVariable Long id) throws Exception {
+        Contact contact = contactService.findById(id);
+        if (contact == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(contact);
     }
 
     @PostMapping("/api/service/Contact")
