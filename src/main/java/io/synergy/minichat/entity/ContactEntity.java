@@ -34,6 +34,13 @@ public class ContactEntity {
         this.middleName = middleName;
         this.phone = phone;
     }
+
+    public ContactEntity(String firstName, String lastName, String middleName, String phone) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.phone = phone;
+    }
 }
 
 
