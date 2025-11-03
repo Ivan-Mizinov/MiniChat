@@ -1,6 +1,6 @@
 package io.synergy.minichat.service;
 
-import io.synergy.minichat.dto.Contact;
+import io.synergy.minichat.dto.ContactDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.spy;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ContactServiceImplCacheTest {
+class ContactDtoServiceImplCacheTest {
 
     @Autowired
     private ContactServiceImpl contactService;
@@ -24,14 +24,14 @@ class ContactServiceImplCacheTest {
     @Autowired
     private CacheManager cacheManager;
 
-    private Contact contact1;
+    private ContactDto contact1;
 
     @BeforeEach
     void setUp() {
         Objects.requireNonNull(cacheManager.getCache("contacts")).clear();
         Objects.requireNonNull(cacheManager.getCache("allContacts")).clear();
 
-        contact1 = new Contact();
+        contact1 = new ContactDto();
         contact1.setId(1L);
         contact1.setFirstName("Иван");
         contact1.setLastName("Иванов");
@@ -41,12 +41,12 @@ class ContactServiceImplCacheTest {
 
     @Test
     void testFindById_CachesResult() throws Exception {
-        Contact result1 = contactService.save(contact1);
-        Contact found1 = contactService.findById(1L);
+        ContactDto result1 = contactService.save(contact1);
+        ContactDto found1 = contactService.findById(1L);
 
         assertEquals("Иван", found1.getFirstName());
 
-        Contact found2 = contactService.findById(1L);
+        ContactDto found2 = contactService.findById(1L);
 
         assertEquals(found1, found2);
     }
@@ -55,13 +55,13 @@ class ContactServiceImplCacheTest {
     void testUpdate_UpdatesCache() throws Exception {
         contactService.save(contact1);
 
-        Contact cached = contactService.findById(1L);
+        ContactDto cached = contactService.findById(1L);
         assertEquals("Иван", cached.getFirstName());
 
         cached.setFirstName("Пётр");
-        Contact updated = contactService.update(cached);
+        ContactDto updated = contactService.update(cached);
 
-        Contact refreshed = contactService.findById(1L);
+        ContactDto refreshed = contactService.findById(1L);
         assertEquals("Пётр", refreshed.getFirstName());
     }
 
@@ -69,12 +69,12 @@ class ContactServiceImplCacheTest {
     void testDeleteById_EvictsFromCache() throws Exception {
         contactService.save(contact1);
 
-        Contact cached = contactService.findById(1L);
+        ContactDto cached = contactService.findById(1L);
         assertNotNull(cached);
 
         contactService.deleteById(1L);
 
-        Contact afterDelete = contactService.findById(1L);
+        ContactDto afterDelete = contactService.findById(1L);
 
         assertNull(afterDelete);
     }
@@ -83,10 +83,10 @@ class ContactServiceImplCacheTest {
     void testFindAll_CachesResult() {
         contactService.save(contact1);
 
-        List<Contact> all1 = contactService.findAll();
+        List<ContactDto> all1 = contactService.findAll();
         assertEquals(1, all1.size());
 
-        List<Contact> all2 = contactService.findAll();
+        List<ContactDto> all2 = contactService.findAll();
         assertEquals(all1, all2);
     }
 

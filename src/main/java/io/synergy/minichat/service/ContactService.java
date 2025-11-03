@@ -1,17 +1,17 @@
 package io.synergy.minichat.service;
 
-import io.synergy.minichat.dto.Contact;
+import io.synergy.minichat.dto.ContactDto;
 
 import java.util.List;
 
 public interface ContactService {
-    List<Contact> findAll();
+    List<ContactDto> findAll();
 
-    Contact save(Contact contact);
+    ContactDto save(ContactDto contact);
 
-    Contact update(Contact contact);
+    ContactDto update(ContactDto contact);
 
-    Contact findById(Long id) throws Exception;
+    ContactDto findById(Long id) throws Exception;
 
     void deleteById(Long id);
 }

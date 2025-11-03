@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 @DisplayName("Контроллер для контактов")
-class ContactControllerIntegrationTest {
+class ContactDtoControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;

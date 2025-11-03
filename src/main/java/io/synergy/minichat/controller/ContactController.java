@@ -1,6 +1,6 @@
 package io.synergy.minichat.controller;
 
-import io.synergy.minichat.dto.Contact;
+import io.synergy.minichat.dto.ContactDto;
 import io.synergy.minichat.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ public class ContactController {
     }
 
     @GetMapping("/api/service/Contacts")
-    public List<Contact> getAllContacts() {
+    public List<ContactDto> getAllContacts() {
         return contactService.findAll();
     }
 
     @GetMapping("/api/service/Contact/{id}")
-    public ResponseEntity<Contact> getContactById(@PathVariable Long id) throws Exception {
-        Contact contact = contactService.findById(id);
+    public ResponseEntity<ContactDto> getContactById(@PathVariable Long id) throws Exception {
+        ContactDto contact = contactService.findById(id);
         if (contact == null) {
             return ResponseEntity.notFound().build();
         }
@@ -33,12 +33,12 @@ public class ContactController {
     }
 
     @PostMapping("/api/service/Contact")
-    public Contact addContact(@RequestBody Contact contact) {
+    public ContactDto addContact(@RequestBody ContactDto contact) {
         return contactService.save(contact);
     }
 
     @PutMapping("/api/service/Contact")
-    public Contact updateContact(@RequestBody Contact contact) {
+    public ContactDto updateContact(@RequestBody ContactDto contact) {
         return contactService.update(contact);
     }
 
