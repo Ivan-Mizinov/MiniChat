@@ -38,7 +38,7 @@ public class ContactController {
     }
 
     @PutMapping("/api/service/Contact")
-    public ContactDto updateContact(@RequestBody ContactDto contact) {
+    public ContactDto updateContact(@RequestBody ContactDto contact) throws Exception {
         return contactService.update(contact);
     }
 

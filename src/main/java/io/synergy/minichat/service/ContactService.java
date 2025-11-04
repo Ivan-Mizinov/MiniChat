@@ -9,7 +9,7 @@ public interface ContactService {
 
     ContactDto save(ContactDto contact);
 
-    ContactDto update(ContactDto contact);
+    ContactDto update(ContactDto contact) throws Exception;
 
     ContactDto findById(Long id) throws Exception;
 
