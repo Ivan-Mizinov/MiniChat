@@ -4,6 +4,7 @@ import io.synergy.minichat.dto.ContactDto;
 import io.synergy.minichat.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class ContactController {
         return contactService.update(contact);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/api/service/Contact/{id}")
     public void deleteContact(@PathVariable Long id) {
         contactService.deleteById(id);
