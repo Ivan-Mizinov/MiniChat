@@ -18,3 +18,16 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+  cloud:
+    function:
+      definition: consumer;producer
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:29092
+      bindings:
+        consumer-in-0:
+          destination: chat-producer-topic
+        producer-out-0:
+          destination: chat-consumer-topic
