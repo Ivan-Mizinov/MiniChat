@@ -26,10 +26,6 @@ public class KafkaMessageService {
     @PostConstruct
     public void init() {
         deque.add("Message 1");
-        deque.add("Message 2");
-        deque.add("Message 3");
-        deque.add("Message 4");
-        deque.add("Message 5");
     }
 
     @Bean
